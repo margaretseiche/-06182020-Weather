@@ -27,16 +27,18 @@ $(document).ready(function() {
                 url: queryURL
             }).then(function(response) {
                 console.log(response);                     
-               /*     if (cityArray.includes(citySearch) == false) {
+            /*    if (citySearch === "") {
+                    return;
+                }    */
+            //    if (cityArray.includes(citySearch) == false) {
                         cityArray.push(citySearch);
-                    } else 
-                        { alert("duplicate");
-                    }            */
-                 });
-               cityArray.push(citySearch);
-               //console.log(cityArray);
+            //    }        
+            });
+            //    cityArray.splice(i,0,citySearch);
+               console.log(cityArray);
+                
         renderList();
-        storeCities();
+        storeCities(); 
         init();
     };
 
@@ -52,12 +54,14 @@ $(document).ready(function() {
     function storeCities() {
         // Stringify and set "todos" key in localStorage to todos array
         localStorage.setItem("cityArray", JSON.stringify(cityArray));
+
     }
 
     function init() {
         // Get stored todos from localStorage
         // Parsing the JSON string to an object
         var storedCities = JSON.parse(localStorage.getItem("cityArray"));
+        console.log(storedCities);
     
         // If todos were retrieved from localStorage, update the todos array to it
         if (storedCities !== null) {
@@ -65,7 +69,6 @@ $(document).ready(function() {
         }
     }
         
-    init();
-    storeCities();    
+    init();   
     renderList();
 });    
