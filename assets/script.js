@@ -4,7 +4,7 @@ $(document).ready(function() {
     var search = $(".search");
 //    var searchButton = $("#search-button");
 
-    var listHistory = $(".list-group history");
+    var listHistory = $(".list-group");
     var today = $("#today");
     var forecast = $("#forecast");
     var citySearch = "";
@@ -20,7 +20,7 @@ $(document).ready(function() {
 
         var apiKey = "9a44300c45b75aea6daff91cc878fd61";
         var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&appid=" + apiKey;
-        console.log(queryURL);
+        //console.log(queryURL);
 
             $.ajax({
                 method: "GET",
@@ -34,15 +34,15 @@ $(document).ready(function() {
                     }            */
                  });
                cityArray.push(citySearch);
-               console.log(cityArray);
+               //console.log(cityArray);
         renderList();
     };
 
     function renderList(){
                         
-        for (var i = 0; i < cityArray.length; i++) {             
+        for (var i = 0; i < cityArray.length; i++) {            
             var li = $("<li>");
-            li.text(citySearch);
+            li.text(cityArray);
             listHistory.append(li);
         } 
     }
