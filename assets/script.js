@@ -80,6 +80,7 @@ $(document).ready(function() {
         $("#forecast").empty();
 
         var apiKey = "9a44300c45b75aea6daff91cc878fd61";
+        
         var todayURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial" + "&appid=" + apiKey;
 
             $.ajax({
@@ -88,12 +89,10 @@ $(document).ready(function() {
             }).then(function(response) {
                 console.log(response);   
 
-            var cityTodayHeadline = $("<h2>").text(citySearch + " (" + (moment().format('dddd, MMMM Do YYYY')) + ")");
-            var weatherType = response.weather[0].main;
-            console.log(weatherType);
-
-        //    var iconArray = []  
-        //    var weatherIcon = $("<img>").attr("src",);   
+            var cityTodayHeadline = $("<h2 id='todayHeadline'>").text(citySearch + " (" + (moment().format('dddd, MMMM Do YYYY')) + ")");
+        
+            var iconURL = "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
+            var weatherIcon = $("<img id='todayImg'>").attr("src",iconURL);   
 
             var currentTime = $("<h4>").text(moment().format('h:mm a')); 
             var currentTemp = $("<p>").text("Temperature: " + Math.round((response.main.temp)) + " degrees F");   
@@ -101,11 +100,29 @@ $(document).ready(function() {
             var todayLowTemp = $("<p>").text("Low: " + Math.round((response.main.temp_min)) + " degrees F").addClass("class","tempdetail");       
             var humidity = $("<p>").text("Humidity: " + response.main.humidity + "%");
             var windspeed = $("<p>").text("Wind Speed: " + response.wind.speed + "MPH");  
-            
-            today.append(cityTodayHeadline,currentTime,currentTemp,todayHighTemp,todayLowTemp,humidity,windspeed);
+        /*    latitude = response.coord.lat;
+            longitude = response.coord.lon;    
+            console.log(latitude);
+            console.log(longitude);    
+            uvIndex();  
+        */    
+            today.append(weatherIcon);    
+            today.append(cityTodayHeadline,weatherIcon,currentTime,currentTemp,todayHighTemp,todayLowTemp,humidity,windspeed);        
         });
 
-                /*    var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?q=" + "lat=37.75&lon=-122.37" + "&appid=" + apiKey;    
+    /*    var latitude = "";   //This is not waiting for 'today' to finish --- still trying to see how to access variable
+        var longitude = "";  //without putting 'today' into function and possibly losing access to global variables that are working now
+        console.log(latitude);
+        console.log(longitude);
+
+        async function uvIndex () {
+            while (latitude == "") {
+                const result = await todaySearch();    
+            }
+            longitude = "";
+            console.log(latitude);
+            console.log(longitude);
+                    var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?" + "appid=" + apiKey + "&lat=" + latitude + "&lon=" + longitude;    
         
             $.ajax({
                 method: "GET",
@@ -113,9 +130,11 @@ $(document).ready(function() {
             }).then(function(response) {
                 console.log(response);     
         
-            var uvIndex = "";   
+//            var uvIndexOutput = "";   
 
-              }); */ 
+              });    
+        }  */
+
             var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearch + "&units=imperial" + "&appid=" + apiKey;
         
                 $.ajax({
@@ -127,9 +146,9 @@ $(document).ready(function() {
                     var cityForecastHeadline = $("<h2>").text("5-Day Forecast").appendTo(forecast);
 
                     for ( var m = 0; m < 40; m++) {
-                    //    var daTe = data.list[i].dt_txt
-                        var daTe = response.list[m].dt_txt;
-                        if (daTe.includes("12:00:00")) {
+
+                        var dateNoon = response.list[m].dt_txt;
+                        if (dateNoon.includes("12:00:00")) {
                         
                             if (response.list[m].dt_txt[5] === "0") {
                                 var forecastMonth = response.list[m].dt_txt[6];
@@ -145,11 +164,14 @@ $(document).ready(function() {
                             var forecastYear = response.list[m].dt_txt[0] + response.list[m].dt_txt[1] + response.list[m].dt_txt[2] + response.list[m].dt_txt[3];   
                             var forecastDateText = $("<p id='forecastDate'>").text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
                             var forecastTemp = $("<p>").text("Temperature: " + Math.round(response.list[m].main.temp) + " degrees F");   
-                            var forecastHumidity = $("<p>").text("Humidity: " + response.list[m].main.humidity + "%");        
+                            var forecastHumidity = $("<p>").text("Humidity: " + response.list[m].main.humidity + "%");  
+                            
+                            var iconURL = "http://openweathermap.org/img/wn/" + response.list[m].weather[0].icon + "@2x.png";
+                            var weatherIcon = $("<img id='todayImg'>").attr("src",iconURL);   
 
                             var card = $("<div class='col-sm-2 card-body card'>").appendTo(forecast);
 
-                            card.append(forecastDateText,forecastTemp,forecastHumidity);
+                            card.append(forecastDateText,weatherIcon,forecastTemp,forecastHumidity);
                         } 
                     }
                 });  

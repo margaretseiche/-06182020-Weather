@@ -24,16 +24,25 @@ li {
 }
 
 #today {
-    background-color: rgb(236, 233, 233);
+    background-color: rgb(253, 235, 183);
     padding: 1em;
     border-radius: 0.3em;
 }
 
+#todayHeadline {
+    float: left;
+}
+
 #forecast {
-    background-color: rgb(236, 233, 233);
+    background-color: rgb(253, 235, 183);
     padding: 1em;
     border-radius: 0.3em;
     height: 50%;
+}
+
+img {
+    height: 6rem;
+    width: 6rem;
 }
 
 .card {
