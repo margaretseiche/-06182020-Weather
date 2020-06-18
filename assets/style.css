@@ -10,17 +10,22 @@
 
 .history-button {
     margin: 0.5em;
-    margin-top: 0.2em;
+    margin-top: 0em;
     float: right;
     background-color: gold;
 }
 
 li {
     list-style-type: none;
-    margin: 2em, 1em, 1em, 0.5em;
+    margin: 2em, 1em, 0, 0.5em;
     padding-top: 0.5em;
     padding-left: 1em;
     border-top: 1px solid rgb(194, 192, 192);
+}
+
+#cityListItem {
+    padding: 0;
+    margin: 0;
 }
 
 #today {

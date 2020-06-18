@@ -36,7 +36,8 @@ $(document).ready(function() {
 
         for (var i = 0; i < cityArray.length; i++) { 
             var city = cityArray[i];           
-            var li = $("<li>").text(city).attr("data-index", i).appendTo(listHistory);
+            var li = $("<li>").attr("data-index", i).appendTo(listHistory);
+            var cityItem = $("<span id='cityListItem'>").text(city).appendTo(li);
             var button = $("<button>").text("Remove").addClass("history-button").appendTo(li);
         } 
     }
@@ -103,9 +104,7 @@ $(document).ready(function() {
             today.append(cityTodayHeadline,weatherIcon,currentTime,currentTemp,todayHighTemp,todayLowTemp,humidity,windspeed);        
         
             var latitude = response.coord.lat;
-            var longitude = response.coord.lon;    
-            console.log(latitude);
-            console.log(longitude);    
+            var longitude = response.coord.lon;        
 
             var apiKey = "9a44300c45b75aea6daff91cc878fd61";
             var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?" + "appid=" + apiKey + "&lat=" + latitude + "&lon=" + longitude;    
@@ -177,16 +176,16 @@ $(document).ready(function() {
             if (element.matches("button") === true) {
 
             // Get its data-index value and remove that city from the list
-            var index = element.parentElement.getAttribute("data-index");  
-            cityArray.splice(index, 1);
+            var indexRemove = element.parentElement.getAttribute("data-index");  
+            cityArray.splice(indexRemove, 1);
             
             // Store updated todos in localStorage, re-render the list
             storeSearchHistory();
             renderList();  
-            }// else {
-              //  for (var n = 0; cityArray.length) {
-            //    citySearch = this.val; //responds to click but not doing search
-            //    startSearch();
-           // }     
+            } else {
+                var indexClick = element.parentElement.getAttribute("data-index");
+                citySearch = cityArray[indexClick]; 
+                startSearch();
+            }     
     });                        
 }); 
