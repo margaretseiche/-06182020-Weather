@@ -80,7 +80,6 @@ $(document).ready(function() {
         $("#forecast").empty();
 
         var apiKey = "9a44300c45b75aea6daff91cc878fd61";
-        
         var todayURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial" + "&appid=" + apiKey;
 
             $.ajax({
@@ -91,8 +90,8 @@ $(document).ready(function() {
 
             var cityTodayHeadline = $("<h2 id='todayHeadline'>").text(citySearch + " (" + (moment().format('dddd, MMMM Do YYYY')) + ")");
         
-            var iconURL = "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
-            var weatherIcon = $("<img id='todayImg'>").attr("src",iconURL);   
+            var todayIconURL = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
+            var weatherIcon = $("<img id='todayImg'>").attr("src",todayIconURL);   
 
             var currentTime = $("<h4>").text(moment().format('h:mm a')); 
             var currentTemp = $("<p>").text("Temperature: " + Math.round((response.main.temp)) + " degrees F");   
@@ -100,29 +99,16 @@ $(document).ready(function() {
             var todayLowTemp = $("<p>").text("Low: " + Math.round((response.main.temp_min)) + " degrees F").addClass("class","tempdetail");       
             var humidity = $("<p>").text("Humidity: " + response.main.humidity + "%");
             var windspeed = $("<p>").text("Wind Speed: " + response.wind.speed + "MPH");  
-        /*    latitude = response.coord.lat;
-            longitude = response.coord.lon;    
+        
+            today.append(cityTodayHeadline,weatherIcon,currentTime,currentTemp,todayHighTemp,todayLowTemp,humidity,windspeed);        
+        
+            var latitude = response.coord.lat;
+            var longitude = response.coord.lon;    
             console.log(latitude);
             console.log(longitude);    
-            uvIndex();  
-        */    
-            today.append(weatherIcon);    
-            today.append(cityTodayHeadline,weatherIcon,currentTime,currentTemp,todayHighTemp,todayLowTemp,humidity,windspeed);        
-        });
 
-    /*    var latitude = "";   //This is not waiting for 'today' to finish --- still trying to see how to access variable
-        var longitude = "";  //without putting 'today' into function and possibly losing access to global variables that are working now
-        console.log(latitude);
-        console.log(longitude);
-
-        async function uvIndex () {
-            while (latitude == "") {
-                const result = await todaySearch();    
-            }
-            longitude = "";
-            console.log(latitude);
-            console.log(longitude);
-                    var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?" + "appid=" + apiKey + "&lat=" + latitude + "&lon=" + longitude;    
+            var apiKey = "9a44300c45b75aea6daff91cc878fd61";
+            var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?" + "appid=" + apiKey + "&lat=" + latitude + "&lon=" + longitude;    
         
             $.ajax({
                 method: "GET",
@@ -130,11 +116,11 @@ $(document).ready(function() {
             }).then(function(response) {
                 console.log(response);     
         
-//            var uvIndexOutput = "";   
-
-              });    
-        }  */
-
+            var uvIndexOutput = $("<p>").text("UV Index:  ").appendTo(today);
+            var uvText = $("<span id='uv'>").text(response.value).appendTo(uvIndexOutput);   
+            });    
+              
+        });
             var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearch + "&units=imperial" + "&appid=" + apiKey;
         
                 $.ajax({
@@ -166,8 +152,8 @@ $(document).ready(function() {
                             var forecastTemp = $("<p>").text("Temperature: " + Math.round(response.list[m].main.temp) + " degrees F");   
                             var forecastHumidity = $("<p>").text("Humidity: " + response.list[m].main.humidity + "%");  
                             
-                            var iconURL = "http://openweathermap.org/img/wn/" + response.list[m].weather[0].icon + "@2x.png";
-                            var weatherIcon = $("<img id='todayImg'>").attr("src",iconURL);   
+                            var forecastIconURL = "https://openweathermap.org/img/wn/" + response.list[m].weather[0].icon + "@2x.png";
+                            var weatherIcon = $("<img id='todayImg'>").attr("src",forecastIconURL);   
 
                             var card = $("<div class='col-sm-2 card-body card'>").appendTo(forecast);
 
