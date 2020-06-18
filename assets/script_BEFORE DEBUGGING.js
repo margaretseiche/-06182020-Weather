@@ -42,6 +42,7 @@ $(document).ready(function() {
     }
 
     search.on("submit",setArray);
+    //search.on("submit",startSearch);
 
     function setArray(event) {    
         event.preventDefault();
@@ -62,10 +63,12 @@ $(document).ready(function() {
         var cityString = newArr.join(" ");
         citySearch = cityString;  
         
-        if ((cityArray.indexOf(citySearch) == -1)){
-            cityArray.push(citySearch);
-        } 
-        
+        for (var j = 0; j <cityArray.length; j++){
+            if ((cityArray.includes(citySearch) == "false")){
+                pastElements.push(citySearch);
+            } 
+        }     
+
         renderList();
         storeSearchHistory();
         startSearch();
@@ -112,7 +115,7 @@ $(document).ready(function() {
             var uvIndex = "";   
 
               }); */ 
-            var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearch + "&units=imperial" + "&appid=" + apiKey;
+/*            var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearch + "&units=imperial" + "&appid=" + apiKey;
         
                 $.ajax({
                     method: "GET",
@@ -122,28 +125,29 @@ $(document).ready(function() {
 
                     var cityForecastHeadline = $("<h2>").text("5-Day Forecast").appendTo(forecast);
 
-                    for (var m = 5; m < 40; m+=8) {
+                    var date = (moment().format('l'))
+                    var forecastDateArray = [date+1,date+2,date+3,date+4,date+5]
+                    console.log(forecastDateArray);
 
-                        if (response.list[m].dt_txt[5] === "0") {
-                            var forecastMonth = response.list[m].dt_txt[6];
-                        } else {
-                            var forecastMonth = response.list[m].dt_txt[5] + response.list[m].dt_txt[6]; 
-                        }
-                        if (response.list[m].dt_txt[8] === "0") {
-                            var forecastDay = response.list[m].dt_txt[9];
-                        } else {
-                            var forecastDay = response.list[m].dt_txt[8] + response.list[m].dt_txt[9]; 
-                        }
-                        var forecastYear = response.list[m].dt_txt[0] + response.list[m].dt_txt[1] + response.list[m].dt_txt[2] + response.list[m].dt_txt[3];   
-                        var forecastDateText = $("<p id='forecastDate'>").text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
-                        var forecastTemp = $("<p>").text("Temperature: " + Math.round(response.list[m].main.temp) + " degrees F");   
-                        var forecastHumidity = $("<p>").text("Humidity: " + response.list[m].main.humidity + "%");        
+                    for (var j = 5; j < 40; j+=8) {
+
+                        var forecastDate = $("<h4>").text(response.list[j].dt_txt);  
+                        var forecastDate = (response.list[j].dt_txt);
+                        console.log(forecastDate);
+                        console.log(typeof forecastDate);
+                        var forecastMonth = response.list[j].dt_txt[6] + response.list[j].dt_txt[7]; 
+                        var forecastDay = 
+                    //    var forecastDay = forecastDate.getDay();
+                    //    var forecastYear = forecastDate.getYear();  
+                    //    var forecastDateText = forecastMonth + "/" + forecastDay + "/" + forecastYear;
+                        var forecastTemp = $("<p>").text("Temperature: " + Math.round(response.list[j].main.temp) + " degrees F");   
+                        var forecastHumidity = $("<p>").text("Humidity: " + response.list[j].main.humidity + "%");        
 
                         var card = $("<div class='col-sm-2 card-body card'>").appendTo(forecast);
 
-                        card.append(forecastDateText,forecastTemp,forecastHumidity);
+                        card.append(forecastDate,forecastTemp,forecastHumidity);
                     }
-                });  
+                });  */
                localStorage.setItem("citySearch", JSON.stringify(citySearch));  
     }
 

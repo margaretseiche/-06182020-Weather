@@ -1,0 +1,50 @@
+#aside {
+    background-color: #b3e6ff; 
+    border-radius: 0.3em;
+}
+
+#search-box {
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.history-button {
+    margin: 0.5em;
+    margin-top: 0.2em;
+    float: right;
+    background-color: gold;
+}
+
+li {
+    list-style-type: none;
+    margin: 2em, 1em, 1em, 0.5em;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    border-top: 1px solid rgb(194, 192, 192);
+}
+
+#today {
+    background-color: rgb(236, 233, 233);
+    padding: 1em;
+    border-radius: 0.3em;
+}
+
+#forecast {
+    background-color: rgb(236, 233, 233);
+    padding: 1em;
+    border-radius: 0.3em;
+    height: 50%;
+}
+
+.card {
+    background-color: blue;
+    color: white;
+    margin: 1%;  
+    border-radius: 0.3em;
+    float: left;
+}
+
+#forecastDate {
+    font-weight: bold;
+    color: gold;
+}

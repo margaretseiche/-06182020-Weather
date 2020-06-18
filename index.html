@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./assets/style.css">
 
   <title>Weather Dashboard</title>
 </head>
@@ -23,15 +24,18 @@
   <div class="container-fluid">
     <div class="row">
       <aside class="col-lg-3 bg-light">
-        <h5 class="mt-1">Search for a City:</h5>
-        <div class="form-inline form-group search">
-          <form>
-            <input class="form-control" type="text" id="search-value" />
-            <button class="btn btn-primary" id="search-button"> <i class="fa fa-search"></i> </button>
-          </form>
-        </div>  
-
-        <ul class="list-group"></ul>
+        <div id="aside">
+          <div id="search-box">
+            <h5 class="mt-1">Search for a City:</h5>
+            <div class="form-inline form-group search">
+              <form>
+                <input class="form-control" type="text" id="search-value" />
+                <button class="btn btn-primary" id="search-button"> <i class="fa fa-search"></i> </button>
+              </form>
+            </div>
+          </div>
+            <ul class="list-group"></ul>
+        </div>    
       </aside>
 
       <div class="col-lg-9">
