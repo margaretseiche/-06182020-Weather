@@ -66,9 +66,13 @@ $(document).ready(function() {
             cityArray.push(citySearch);
         } 
         
+        //cityInput.empty();      //no change (still searches but won't clear input field after search)
+        //cityInput.val() = "";   //no longer searches
+
         renderList();
         storeSearchHistory();
         startSearch();
+        //cityInput.val() = "";   //searches but does not clear
     }      
    
     function startSearch() {
@@ -122,29 +126,39 @@ $(document).ready(function() {
 
                     var cityForecastHeadline = $("<h2>").text("5-Day Forecast").appendTo(forecast);
 
-                    for (var m = 5; m < 40; m+=8) {
+                    for ( var m = 0; m < 40; m++) {
+                    //    var daTe = data.list[i].dt_txt
+                        var daTe = response.list[m].dt_txt;
+                        if (daTe.includes("12:00:00")) {
+                        
+                            if (response.list[m].dt_txt[5] === "0") {
+                                var forecastMonth = response.list[m].dt_txt[6];
+                            } else {
+                                var forecastMonth = response.list[m].dt_txt[5] + response.list[m].dt_txt[6]; 
+                            }
+                            if (response.list[m].dt_txt[8] === "0") {
+                                var forecastDay = response.list[m].dt_txt[9];
+                            } else {
+                                var forecastDay = response.list[m].dt_txt[8] + response.list[m].dt_txt[9]; 
+                            }
+                            
+                            var forecastYear = response.list[m].dt_txt[0] + response.list[m].dt_txt[1] + response.list[m].dt_txt[2] + response.list[m].dt_txt[3];   
+                            var forecastDateText = $("<p id='forecastDate'>").text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
+                            var forecastTemp = $("<p>").text("Temperature: " + Math.round(response.list[m].main.temp) + " degrees F");   
+                            var forecastHumidity = $("<p>").text("Humidity: " + response.list[m].main.humidity + "%");        
 
-                        if (response.list[m].dt_txt[5] === "0") {
-                            var forecastMonth = response.list[m].dt_txt[6];
-                        } else {
-                            var forecastMonth = response.list[m].dt_txt[5] + response.list[m].dt_txt[6]; 
-                        }
-                        if (response.list[m].dt_txt[8] === "0") {
-                            var forecastDay = response.list[m].dt_txt[9];
-                        } else {
-                            var forecastDay = response.list[m].dt_txt[8] + response.list[m].dt_txt[9]; 
-                        }
-                        var forecastYear = response.list[m].dt_txt[0] + response.list[m].dt_txt[1] + response.list[m].dt_txt[2] + response.list[m].dt_txt[3];   
-                        var forecastDateText = $("<p id='forecastDate'>").text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
-                        var forecastTemp = $("<p>").text("Temperature: " + Math.round(response.list[m].main.temp) + " degrees F");   
-                        var forecastHumidity = $("<p>").text("Humidity: " + response.list[m].main.humidity + "%");        
+                            var card = $("<div class='col-sm-2 card-body card'>").appendTo(forecast);
 
-                        var card = $("<div class='col-sm-2 card-body card'>").appendTo(forecast);
-
-                        card.append(forecastDateText,forecastTemp,forecastHumidity);
+                            card.append(forecastDateText,forecastTemp,forecastHumidity);
+                        } 
                     }
                 });  
                localStorage.setItem("citySearch", JSON.stringify(citySearch));  
+
+            /*   if (today !== "") {         //does not search and remove buttons no longer work
+                cityInput.val() = "";
+               }      */
+            //   cityInput.val() = "";       //clears input field but does not search
     }
 
     // When a element inside of the city search history is clicked...
@@ -161,6 +175,10 @@ $(document).ready(function() {
             // Store updated todos in localStorage, re-render the list
             storeSearchHistory();
             renderList();  
-        }      
+            }// else {
+              //  for (var n = 0; cityArray.length) {
+            //    citySearch = this.val; //responds to click but not doing search
+            //    startSearch();
+           // }     
     });                        
 }); 
